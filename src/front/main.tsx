@@ -12,7 +12,7 @@ class App extends Component<AppProps, AppState>
     try_connect()
     {
         console.log("try_connect");
-        let uu = window.electronAPI;
+        // @ts-expect-error
         let res = window.electronAPI.test_rpc_call('hi');
         console.log(res);
     }
