@@ -7,6 +7,10 @@ import ReactDOM from 'react-dom/client';
 interface AppProps {};
 interface AppState {};
 
+window.electronAPI.back_to_front((arg) => {
+    console.log("front called", arg);
+})
+
 class App extends Component<AppProps, AppState>
 {
     async try_connect()
@@ -17,6 +21,8 @@ class App extends Component<AppProps, AppState>
         //let res = await window.electronAPI.front_to_back_bidir('hi', 'bye'); ???
         console.log(res);
     }
+
+
 
     render() {
         return (

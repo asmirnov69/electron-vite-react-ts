@@ -6,8 +6,21 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+let myMainWindow = null;
+let timeout_func_set:boolean = false;
+function timeout_func()
+{
+  timeout_func_set = true;
+  console.log("timeout_func");
+  myMainWindow.webContents.send('back_to_front', "URAAA");
+  setTimeout(timeout_func, 1000);
+}
+
 async function handle_front_to_back_bidir(event:Electron.IpcMainInvokeEvent, args:any[]):Promise<string> {
   console.log("rpc call via handle_front_to_back_bidir", args);
+  if (timeout_func_set == false) {
+    setTimeout(timeout_func, 1000);
+  }
   return "response";
 }
 
@@ -21,6 +34,7 @@ const createWindow = () => {
       //nodeIntegration: true
     },
   });
+  myMainWindow = mainWindow;
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
@@ -31,6 +45,7 @@ const createWindow = () => {
 
   console.log("setting up ipc");
   ipcMain.handle('front_to_back_bidir', handle_front_to_back_bidir);
+
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
