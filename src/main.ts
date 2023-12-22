@@ -6,6 +6,11 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+async function handle_front_to_back_bidir(event:Electron.IpcMainInvokeEvent, args:any[]):Promise<string> {
+  console.log("rpc call via handle_front_to_back_bidir", args);
+  return "response";
+}
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -25,11 +30,7 @@ const createWindow = () => {
   }
 
   console.log("setting up ipc");
-  ipcMain.on('test_rpc_call', (event, arg) => {
-    console.log("rpc call with args", event, arg);
-    const response = "response";
-    event.sender.send(response);
-  });
+  ipcMain.handle('front_to_back_bidir', handle_front_to_back_bidir);
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();

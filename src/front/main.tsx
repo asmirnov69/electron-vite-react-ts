@@ -9,11 +9,12 @@ interface AppState {};
 
 class App extends Component<AppProps, AppState>
 {
-    try_connect()
+    async try_connect()
     {
         console.log("try_connect");
         // @ts-expect-error
-        let res = window.electronAPI.test_rpc_call('hi');
+        let res = await window.electronAPI.front_to_back_bidir('hi');
+        //let res = await window.electronAPI.front_to_back_bidir('hi', 'bye'); ???
         console.log(res);
     }
 

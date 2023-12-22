@@ -5,5 +5,5 @@ import { contextBridge, ipcRenderer } from "electron";
 
 console.log("PRELOAD!!!!");
 contextBridge.exposeInMainWorld('electronAPI', {
-    test_rpc_call: (arg: any) => ipcRenderer.send('test_rpc_call', arg)
+    front_to_back_bidir: (args:any[]) => ipcRenderer.invoke('front_to_back_bidir', args)
 });
