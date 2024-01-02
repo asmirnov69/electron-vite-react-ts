@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom/client';
-//mport { IpcRenderer } from 'electron';
-//import { ipcRenderer } from 'electron/renderer';
-//import { IpcRenderer, ipcRenderer } from 'electron';
 
 interface AppProps {};
 interface AppState {};
 
-window.electronAPI.back_to_front((arg) => {
+window.electronAPI.back_to_front((arg:string) => {
     console.log("front called", arg);
 })
 
@@ -16,9 +13,8 @@ class App extends Component<AppProps, AppState>
     async try_connect()
     {
         console.log("try_connect");
-        // @ts-expect-error
-        let res = await window.electronAPI.front_to_back_bidir('hi');
-        //let res = await window.electronAPI.front_to_back_bidir('hi', 'bye'); ???
+        //let res = await window.electronAPI.front_to_back_bidir(['hi']);
+        let res = await window.electronAPI.front_to_back_bidir(['hi', 'bye']);
         console.log(res);
     }
 

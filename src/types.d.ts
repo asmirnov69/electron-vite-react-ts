@@ -3,3 +3,15 @@
 // whether you're running in development or production).
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;
+
+export interface IElectronAPI {
+  //loadPreferences: () => Promise<void>,
+  front_to_back_bidir: (args:any[]) => Promise<int>,
+  back_to_front: (callback:any) => Promise<void>
+}
+
+declare global {
+  interface Window {
+    electronAPI: IElectronAPI
+  }
+}
